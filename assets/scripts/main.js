@@ -18,10 +18,10 @@ playButton.addEventListener("click",
         // Gets value from the select
         let userChoice = document.getElementById("select").value;
         // Checks the value and changes the grid difficulty:
-        // EASY
+
+        // EASY = 100 squares
         if (userChoice === "facile") {
             
-            // 
             createSquaresAndBombs(newGrid, 100, "square-10");
 
             addClassOnClick("square-flex", "bg-color-brown");
@@ -38,35 +38,33 @@ playButton.addEventListener("click",
             //     newSquare.append(newText);
 
                  
-            // } 
-        // MEDIUM
+            // }
+
+        // MEDIUM = 81 squares
         } else if (userChoice === "medio") {
 
-            for (let i = 1; i <= 81; i++) {
-                const newSquare = createElement("div", "square-9", "square-flex");
-                const newText = createElement("h2", "text-white");
-                newText.innerHTML = i;
-                newGrid.append(newSquare);
-                newSquare.append(newText);
+            createSquaresAndBombs(newGrid, 81, "square-9");
 
-                addClassOnClick("square-flex", "bg-color-brown");
-            } 
-        // HARD
+            addClassOnClick("square-flex", "bg-color-brown");
+
+            addRemoveClassOnClick("h2", "display-block", "display-none");
+            
+        // HARD = 49 squares
         } else {
 
-            for (let i = 1; i <= 49; i++) {
-                const newSquare = createElement("div", "square-7", "square-flex");
-                const newText = createElement("h2", "text-white");
-                newText.innerHTML = i;
-                newGrid.append(newSquare);
-                newSquare.append(newText);
+            createSquaresAndBombs(newGrid, 49, "square-7");
 
-                addClassOnClick("square-flex", "bg-color-brown");
-            } 
+            addClassOnClick("square-flex", "bg-color-brown");
+
+            addRemoveClassOnClick("h2", "display-block", "display-none"); 
             
         }  
     }
 );
+
+
+
+
 
 // ******************* Funzioni **********************
 
@@ -129,9 +127,15 @@ function createSquaresAndBombs(newGrid, counter, squareClass) {
                 newSquare.style.backgroundColor = "red";
                 alert("Hai perso!");
             });
+        } else {
+            newSquare.addEventListener("click", function() {
+                // il punteggio iniziale è 0
+                // fai un punto
+                // aggiorna il punteggio a schermo
+            });
         }
 
-        
+
         const newText = createElement("h2", "display-none");
         newText.innerHTML = i;
         newGrid.append(newSquare);
