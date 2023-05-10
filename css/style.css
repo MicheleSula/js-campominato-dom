@@ -14,6 +14,10 @@ main {
     width: 100vw;
 }
 
+h2 {
+    padding: 18px 45px;
+}
+
 #title {
     position: absolute;
     z-index: 1000;
@@ -118,6 +122,10 @@ header {
     border: 2px solid white;  
 }
 
+.bomb-square {
+    background-color: red;
+}
+
 .grid-container {
     width: 60%;
     height: 80%;
@@ -140,4 +148,12 @@ header {
 
 .bg-color-brown {
     background-color: burlywood;
+}
+
+.display-none {
+    opacity: 0;
+}
+
+.display-block {
+    opacity: 100%;
 }
