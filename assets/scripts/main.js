@@ -30,16 +30,12 @@ playButton.addEventListener("click",
         let userChoice = document.getElementById("select").value;
         // Checks the value and changes the grid difficulty:
 
+        
+        
         // EASY = 100 squares
         if (userChoice === "facile") {
             
             createSquaresAndBombs(newGrid, 100, "square-10");
-
-            addClassOnClick("square-flex", "bg-color-brown");
-
-            addRemoveClassOnClick("h2", "display-block", "display-none");
-
-            
             // for (let i = 1; i <= 100; i++) {
 
             //     const newSquare = createElement("div", "square-10", "square-flex");
@@ -50,25 +46,15 @@ playButton.addEventListener("click",
 
                  
             // }
-
         // MEDIUM = 81 squares
         } else if (userChoice === "medio") {
 
             createSquaresAndBombs(newGrid, 81, "square-9");
-
-            addClassOnClick("square-flex", "bg-color-brown");
-
-            addRemoveClassOnClick("h2", "display-block", "display-none");
-            
+  
         // HARD = 49 squares
         } else {
 
-            createSquaresAndBombs(newGrid, 49, "square-7");
-
-            addClassOnClick("square-flex", "bg-color-brown");
-
-            addRemoveClassOnClick("h2", "display-block", "display-none"); 
-            
+            createSquaresAndBombs(newGrid, 49, "square-7");   
         }  
     }
 );
@@ -137,6 +123,11 @@ function createSquaresAndBombs(newGrid, counter, squareClass) {
     for (let i = 1; i <= counter; i++) {
         // Setto newSquare = alla funzione CreateElement coi suoi valori (tipo di tag da inserire - le due classi che mi interessano)
         const newSquare = createElement("div", squareClass, "square-flex");
+        // Aggiungo la classe background-brown alla casella cliccata
+        addClassOnClick("square-flex", "bg-color-brown");
+        // Aggiungo la classe display-block all'h2 e tolgo display-none
+        addRemoveClassOnClick("h2", "display-block", "display-none");
+
         // Metto in automatico che ogni casella non è già stata cliccata
         newSquare.clicked = false;
         // Se faccio indexof nell'array BombSquare e trovo un numero che combacia al valore i -->
@@ -156,6 +147,8 @@ function createSquaresAndBombs(newGrid, counter, squareClass) {
         } else {
             newSquare.addEventListener("click", function() {
                 
+                
+
                 if (!newSquare.clicked) {
                     score++;
                     
