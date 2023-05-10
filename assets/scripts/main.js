@@ -32,9 +32,9 @@ playButton.addEventListener("click",
 
         
         
-        // EASY = 100 squares
+        
         if (userChoice === "facile") {
-            
+            // EASY = 100 squares
             createSquaresAndBombs(newGrid, 100, "square-10");
             // for (let i = 1; i <= 100; i++) {
 
@@ -46,14 +46,13 @@ playButton.addEventListener("click",
 
                  
             // }
-        // MEDIUM = 81 squares
         } else if (userChoice === "medio") {
-
+            // MEDIUM = 81 squares
             createSquaresAndBombs(newGrid, 81, "square-9");
   
-        // HARD = 49 squares
+        
         } else {
-
+            // HARD = 49 squares
             createSquaresAndBombs(newGrid, 49, "square-7");   
         }  
     }
