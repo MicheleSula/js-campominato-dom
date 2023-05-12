@@ -14,7 +14,7 @@ playButton.addEventListener("click",
         lossMessage.innerHTML = "";
 
         // Check for grid already existing
-        const gridToEliminate = gridContainer.querySelector(".grid-container");
+        const gridToEliminate = document.querySelector(".grid-container");
         
         // If grid exists remove it
         if (gridToEliminate) {
@@ -36,6 +36,7 @@ playButton.addEventListener("click",
         if (userChoice === "facile") {
             // EASY = 100 squares
             createSquaresAndBombs(newGrid, 100, "square-10");
+
             // for (let i = 1; i <= 100; i++) {
 
             //     const newSquare = createElement("div", "square-10", "square-flex");
@@ -62,7 +63,7 @@ playButton.addEventListener("click",
 
 
 
-// ******************* Funzioni **********************
+// ******************* Utilities functions **********************
 
 // Create element with tagtype and how many classes you want to add
 function createElement (tagType, ...classesToAdd) {
@@ -107,7 +108,7 @@ function createSquaresAndBombs(newGrid, counter, squareClass) {
     
 
     // Ciclo while per la length della stringa minore di 16
-    while (bombSquare.length < 16) {
+    while (bombSquare.length < 8) {
 
         // Creo un numero random da 1 a [valore di counter](100 easy, 81 medium, 49 hard) 
         let randomNumber = Math.floor(Math.random() * counter) + 1;
@@ -123,16 +124,18 @@ function createSquaresAndBombs(newGrid, counter, squareClass) {
         // Setto newSquare = alla funzione CreateElement coi suoi valori (tipo di tag da inserire - le due classi che mi interessano)
         const newSquare = createElement("div", squareClass, "square-flex");
         // Aggiungo la classe background-brown alla casella cliccata
-        addClassOnClick("square-flex", "bg-color-brown");
+        addClassOnClick("square-flex", "bg-color-lightgreen");
         // Aggiungo la classe display-block all'h2 e tolgo display-none
         addRemoveClassOnClick("h2", "display-block", "display-none");
 
         // Metto in automatico che ogni casella non è già stata cliccata
         newSquare.clicked = false;
+
         // Se faccio indexof nell'array BombSquare e trovo un numero che combacia al valore i -->
+        // Poteva essere comodo usare includes()
         if (bombSquare.indexOf(i) !== -1) {
 
-            // Se trovo corrispondenza nei valori al click perdo
+            // Se trovo corrispondenza (quindi trovo una bomba)
             newSquare.addEventListener("click", function() {
                 newSquare.classList.add("bomb-square");
                 newSquare.style.backgroundColor = "red";
@@ -141,24 +144,32 @@ function createSquaresAndBombs(newGrid, counter, squareClass) {
                 newGrid.classList.add("no-pointer");
                 // Aggiorno il punteggio
                 showScore();
-                
+
+                // Rivelo tutte le bombe
+                // for (let j = 1; j <= counter; j++) {
+                // if (bombSquare.indexOf(j) !== -1) {
+                // displayo le bombe con classList.add etc. }
+                // } 
             });
         } else {
             newSquare.addEventListener("click", function() {
                 
-                
-
                 if (!newSquare.clicked) {
                     score++;
                     
                     newSquare.clicked = true;
-                }  
+                }
+                
+                if (closeToBomb(i, bombSquare)) {
+                    newSquare.style.backgroundColor = "orange";
+                }
             });
         }
 
 
+        
         const newText = createElement("h2", "display-none");
-        newText.innerHTML = i;
+        newText.innerHTML = numberOfCloseBombs (i, bombSquare);
         newGrid.append(newSquare);
         newSquare.append(newText);
     }
@@ -173,4 +184,33 @@ function showScore() {
     } else {
         score--;
     }
+}
+
+
+// ONLY WORKS WITH EASY MODE
+
+// Checks if you're close to a bomb horizontally
+function closeToBomb (squareIndex, bombSquare) {
+    // Se l'indice di bombsquare è uguale all'indice dello square che ho cliccato +/-1 allora ritorna vero
+    // Per il diagonale +/- 11 e +/-9 e per il verticale +- 10
+    if ((bombSquare.includes(squareIndex - 1) || bombSquare.includes(squareIndex + 1)) || (bombSquare.includes(squareIndex - 9) || bombSquare.includes(squareIndex + 9)) || (bombSquare.includes(squareIndex - 11) || bombSquare.includes(squareIndex + 11)) || (bombSquare.includes(squareIndex - 10) || bombSquare.includes(squareIndex + 10))) {
+        return true;
+      }
+      return false;
+}
+
+function numberOfCloseBombs (squareIndex, bombSquare) {
+
+    let bombNumber = 0;
+    
+    if (bombSquare.includes(squareIndex - 1)) bombNumber++;
+    if (bombSquare.includes(squareIndex + 1)) bombNumber++;
+    if (bombSquare.includes(squareIndex - 9)) bombNumber++;
+    if (bombSquare.includes(squareIndex + 9)) bombNumber++;
+    if (bombSquare.includes(squareIndex - 11)) bombNumber++;
+    if (bombSquare.includes(squareIndex + 11)) bombNumber++;
+    if (bombSquare.includes(squareIndex - 10)) bombNumber++;
+    if (bombSquare.includes(squareIndex + 10)) bombNumber++;
+
+    return bombNumber;
 }
